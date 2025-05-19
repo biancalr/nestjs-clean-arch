@@ -4,7 +4,7 @@ import { EntityValidationError } from '@/shared/domain/errors/validation-error';
 
 describe('userEntity integration tests', () => {
   describe('Constructor methods', () => {
-    it('Shoul throw an error when creating a user with invalid name', () => {
+    it('Should throw an error when creating a user with invalid name', () => {
       let props: UserProps = {
         ...UserDataBuilder({}),
         name: null,
@@ -30,7 +30,7 @@ describe('userEntity integration tests', () => {
       expect(() => new UserEntity(props)).toThrow(EntityValidationError);
     });
 
-    it('Shoul throw an error when creating a user with invalid email', () => {
+    it('Should throw an error when creating a user with invalid email', () => {
       let props: UserProps = {
         ...UserDataBuilder({}),
         email: null,
@@ -52,6 +52,31 @@ describe('userEntity integration tests', () => {
       props = {
         ...UserDataBuilder({}),
         email: 10 as any,
+      };
+      expect(() => new UserEntity(props)).toThrow(EntityValidationError);
+    });
+    it('Should throw an error when creating a user with invalid password', () => {
+      let props: UserProps = {
+        ...UserDataBuilder({}),
+        password: null,
+      };
+      expect(() => new UserEntity(props)).toThrow(EntityValidationError);
+
+      props = {
+        ...UserDataBuilder({}),
+        password: '',
+      };
+      expect(() => new UserEntity(props)).toThrow(EntityValidationError);
+
+      props = {
+        ...UserDataBuilder({}),
+        password: 'a'.repeat(101),
+      };
+      expect(() => new UserEntity(props)).toThrow(EntityValidationError);
+
+      props = {
+        ...UserDataBuilder({}),
+        password: 10 as any,
       };
       expect(() => new UserEntity(props)).toThrow(EntityValidationError);
     });
