@@ -60,7 +60,7 @@ export class SearchParams {
 
   private set sort(value: string | null) {
     this._sort =
-      value === null || value === undefined || value.trim() === ''
+      value === null || value === undefined || `${value}`.trim() === ''
         ? null
         : `${value}`;
   }
@@ -84,7 +84,7 @@ export class SearchParams {
 
   private set filter(value: string | null) {
     this._filter =
-      value === null || value === undefined || value.trim() === ''
+      value === null || value === undefined || `${value}`.trim() === ''
         ? null
         : `${value}`;
   }
