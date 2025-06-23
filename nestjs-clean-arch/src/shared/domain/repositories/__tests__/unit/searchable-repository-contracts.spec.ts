@@ -126,7 +126,9 @@ describe('Searchable Repository unit tests', () => {
         { filter: 25, expected: '25' },
       ];
       params.forEach(i => {
-        expect(new SearchParams({ filter: i.filter }).filter).toEqual(i.expected);
+        expect(new SearchParams({ filter: i.filter }).filter).toEqual(
+          i.expected,
+        );
       });
     });
   });
