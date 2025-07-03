@@ -1,7 +1,7 @@
 import { HashProvider } from '@/shared/application/providers/hash-provider';
 import { compare, hash } from 'bcryptjs';
 
-export class BcryptHashProvider implements HashProvider {
+export class BcryptjsHashProvider implements HashProvider {
   async generateHash(payload: string): Promise<string> {
     return hash(payload, 6);
   }
