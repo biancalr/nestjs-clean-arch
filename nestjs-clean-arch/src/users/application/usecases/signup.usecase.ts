@@ -19,7 +19,7 @@ export namespace SignupUseCase {
   };
 
   export class UseCase {
-    constructor(private userRepository: UserRepository.Repository) {}
+    constructor(private readonly userRepository: UserRepository.Repository) {}
     async execute(input: Input): Promise<Output> {
       const { email, name, password } = input;
 
