@@ -19,11 +19,10 @@ describe('BcryptjsHashProvider unit tests', () => {
     expect(result).toBeFalsy();
   });
 
-it('Should return true on valid password and hash comparison', async () => {
+  it('Should return true on valid password and hash comparison', async () => {
     const password = 'TestPassword123';
     const hash = await sut.generateHash(password);
     const result = await sut.compareHash(password, hash);
     expect(result).toBeTruthy();
   });
-
 });
