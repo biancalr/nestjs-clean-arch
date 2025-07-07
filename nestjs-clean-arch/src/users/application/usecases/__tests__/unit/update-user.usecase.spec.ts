@@ -1,32 +1,40 @@
 import { UserInMemoryRepository } from '@/users/infraestructure/database/in-memory/repositories/user-in-memory.repository';
-import { GetUserUseCase } from '../../getuser.usecase';
 import { NotFoundError } from '@/shared/domain/errors/not-found-error';
 import { UserEntity } from '@/users/domain/entities/user.entity';
 import { UserDataBuilder } from '@/users/domain/testing/helpers/user-data-builder';
+import { UpdateUserUseCase } from '../../update-user.usecase';
+import { BadRequestError } from '@/shared/application/errors/bad-request-error';
 
 describe('GetUserUseCase unit tests', () => {
-  let sut: GetUserUseCase.UseCase;
+  let sut: UpdateUserUseCase.UseCase;
   let repository: UserInMemoryRepository;
 
   beforeEach(() => {
     repository = new UserInMemoryRepository();
-    sut = new GetUserUseCase.UseCase(repository);
+    sut = new UpdateUserUseCase.UseCase(repository);
   });
   it('Should throw error when entity not found', async () => {
-    await expect(() => sut.execute({ id: 'fakeId' })).rejects.toThrow(
-      new NotFoundError('Entity not found'),
+    await expect(() =>
+      sut.execute({ id: 'fakeId', name: 'test name' }),
+    ).rejects.toThrow(new NotFoundError('Entity not found'));
+  });
+
+  it('Should throw error when name not provided', async () => {
+    await expect(() => sut.execute({ id: 'fakeId', name: '' })).rejects.toThrow(
+      new BadRequestError('Name not provided'),
     );
   });
 
-  it('Should be able to get user profile', async () => {
-    const spyFindById = jest.spyOn(repository, 'findById');
+  it('Should update a user', async () => {
+    const spyUpdate = jest.spyOn(repository, 'update');
     const items = [new UserEntity(UserDataBuilder({}))];
     repository.items = items;
-    const result = await sut.execute({ id: items[0]._id });
-    expect(spyFindById).toHaveBeenCalledTimes(1);
+
+    const result = await sut.execute({ id: items[0]._id, name: 'new name' });
+    expect(spyUpdate).toHaveBeenCalledTimes(1);
     expect(result).toMatchObject({
       id: items[0].id,
-      name: items[0].name,
+      name: 'new name',
       email: items[0].email,
       password: items[0].password,
       createdAt: items[0].createdAt,
