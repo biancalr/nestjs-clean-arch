@@ -4,7 +4,7 @@ import { SearchResult } from '@/shared/domain/repositories/searchable-repository
 export type PaginationOutput<Item = any> = {
   items: Item[];
   total: number;
-  currentpage: number;
+  currentPage: number;
   lastPage: number;
   perPage: number;
 };
@@ -17,7 +17,7 @@ export class PaginationOutputMapper {
     return {
       items,
       total: result.total,
-      currentpage: result.currentPage,
+      currentPage: result.currentPage,
       lastPage: result.lastPage,
       perPage: result.perPage,
     };
