@@ -5,7 +5,7 @@ import { UserDataBuilder } from '@/users/domain/testing/helpers/user-data-builde
 import { UpdateUserUseCase } from '../../update-user.usecase';
 import { BadRequestError } from '@/shared/application/errors/bad-request-error';
 
-describe('GetUserUseCase unit tests', () => {
+describe('UpdateUserUseCase unit tests', () => {
   let sut: UpdateUserUseCase.UseCase;
   let repository: UserInMemoryRepository;
 
